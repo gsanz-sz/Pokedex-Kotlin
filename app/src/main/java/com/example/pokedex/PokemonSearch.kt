@@ -22,17 +22,25 @@ class PokemonSearch : AppCompatActivity(), View.OnClickListener {
         if (view.id == R.id.button_calculate) calculate()
     }
 
-    private fun validade(valitade_text: String) {
-        if
+    private fun isValid(): Boolean {
+        return (
+                binding.editDistance.text.toString() != "" &&
+                binding.editPrice.text.toString() != "" &&
+                binding.editAutonomy.text.toString() != "" &&
+                binding.editAutonomy.text.toString().toFloat() != 0f
+                )
     }
 
     private fun calculate() {
-        val distance = binding.editDistance.text.toString().toFloat()
-        val price = binding.editPrice.text.toString().toFloat()
-        val autonomy = binding.editAutonomy.text.toString().toFloat()
-        val total = (distance * price) / autonomy
+        if (isValid()) {
+            val distance = binding.editDistance.text.toString().toFloat()
+            val price = binding.editPrice.text.toString().toFloat()
+            val autonomy = binding.editAutonomy.text.toString().toFloat()
+            val total = (distance * price) / autonomy
 
-        binding.textTotal.text = "R$ ${"%.2f".format(total)}"
-        Toast.makeText(this, "Deu certo!!", Toast.LENGTH_SHORT).show()
+            binding.textTotal.text = "R$ ${"%.2f".format(total)}"
+        } else {
+            Toast.makeText(this, R.string.validation_fill_all_fields, Toast.LENGTH_SHORT).show()
+        }
     }
 }
